@@ -47,7 +47,7 @@ export default function Home() {
       }
 
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       localStorage.setItem("userId", data.userId);
       localStorage.setItem("name", data.name);
       setLoading(false);
