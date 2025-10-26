@@ -10,14 +10,24 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SendHorizontal } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Chat = () => {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(storedName);
+    }
+  }, []);
+
   return (
     <div>
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            $USERNAME's Chat
+            {name ? `${name}'s Chat` : "Loading..."}
           </CardTitle>
         </CardHeader>
         <CardContent className="h-60 p-0">

@@ -9,14 +9,24 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { SquarePlus } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Todo = () => {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(storedName);
+    }
+  }, [])
+
   return (
     <div>
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            $USERNAME's To-Do List
+            {(name) ? `${name}'s To-Do List` : "Loading..."}
           </CardTitle>
         </CardHeader>
         <CardContent className="h-60 p-0">

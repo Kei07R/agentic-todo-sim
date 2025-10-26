@@ -9,14 +9,24 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { RefreshCcw } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Logs = () => {
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("name");
+    if (storedName) {
+      setName(storedName);
+    }
+  }, []);
+
   return (
     <div>
       <Card className="w-full">
         <CardHeader>
           <CardTitle className="text-lg font-semibold">
-            $USERNAME's Logs
+            {name ? `${name}'s Logs` : "Loading..."}
           </CardTitle>
         </CardHeader>
         <CardContent className="h-60 p-0">
