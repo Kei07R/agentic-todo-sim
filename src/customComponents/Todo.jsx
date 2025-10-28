@@ -251,11 +251,11 @@ const Todo = () => {
             </Tabs>
           </div>
         </CardContent>
-        <CardFooter>
+        {/* <CardFooter>
           <Button variant="outline" className="w-full justify-center">
             <SquarePlus className="mr-2 h-4 w-4" /> Add Item
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
