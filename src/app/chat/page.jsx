@@ -26,17 +26,17 @@ const ChatPage = () => {
         </TabsList>
 
         {/* To-Do Tab */}
-        <TabsContent value="To-Do's">
+        <TabsContent value="To-Do's" forceMount>
           <Todo />
         </TabsContent>
 
         {/* Chat Tab */}
-        <TabsContent value="Chat">
+        <TabsContent value="Chat" forceMount>
           <Chat />
         </TabsContent>
 
         {/* Logs Tab */}
-        <TabsContent value="Logs">
+        <TabsContent value="Logs" forceMount>
           <Logs />
         </TabsContent>
       </Tabs>

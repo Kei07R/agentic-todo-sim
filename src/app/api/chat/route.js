@@ -1,20 +1,28 @@
 import OpenAI from "openai";
 
-export async function GET(request) {
-
+export async function POST(request) {
   const openai = new OpenAI({
     apiKey: process.env.GEMINI_API_KEY,
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
   });
 
-  const SYSTEM_PROMPT = `You are a helpful assistant.`;  
+  const SYSTEM_PROMPT = "You are a helpful assistant.";
 
   try {
+    const { chatHistory } = await request.json();
+
+    if (!Array.isArray(chatHistory)) {
+      return new Response(
+        JSON.stringify({ error: "chatHistory must be an array" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const completion = await openai.chat.completions.create({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: "Hello, how are you?" },
+        ...chatHistory,
       ],
     });
 
@@ -22,11 +30,13 @@ export async function GET(request) {
 
     return new Response(
       JSON.stringify({
-        message: "Chat API is working ✅",
-        modelResponse: message,
+        role: "assistant",
+        message,
+        timestamp: new Date().toISOString(),
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
+
   } catch (error) {
     console.error("Error in Chat API:", error);
     return new Response(
