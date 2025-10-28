@@ -146,7 +146,7 @@ export async function DELETE(request) {
 
 export async function PUT(request) {
   try {
-    const { userId, taskId, updates } = await request.json();
+    const { userId, taskId, completed } = await request.json();
     if (!userId) {
       return new Response(JSON.stringify({ error: "User ID is required" }), {
         status: 400,
@@ -161,27 +161,13 @@ export async function PUT(request) {
     }
 
     await connectDB();
-
-    const updateFields = {};
-    for (const key in updates) {
-      updateFields[`tasks.$.${key}`] = updates[key];
-    }
-    updateFields["tasks.$.updatedAt"] = new Date();
-
     const result = await User.updateOne(
       { userId, "tasks.id": taskId },
-      { $set: updateFields }
+      { $set: { "tasks.$.completed": completed, "tasks.$.updatedAt": new Date() } }
     );
 
-    if (result.matchedCount === 0) {
-      return new Response(JSON.stringify({ error: "User or Task not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
     return new Response(
-      JSON.stringify({ message: "Task updated successfully" }),
+      JSON.stringify({ message: "Task status updated successfully" }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },
