@@ -76,7 +76,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         message: "User created successfully",
-        user: newUser.userId,
+        userId: newUser.userId,
         name: newUser.name,
       }),
       { status: 201 }
