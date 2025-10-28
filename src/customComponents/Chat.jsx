@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 
 const Chat = () => {
   const [name, setName] = useState("");
-
+  
   useEffect(() => {
     const storedName = localStorage.getItem("name");
     if (storedName) {
