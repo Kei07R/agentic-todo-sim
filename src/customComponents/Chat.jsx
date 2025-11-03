@@ -44,7 +44,6 @@ const Chat = () => {
     if (message.trim() === "") return;
 
     const newMessage = { sender: "user", content: message.trim() };
-    // Optimistically render the user's message
     const updatedHistory = [...chatHistory, newMessage];
     setChatHistory(updatedHistory);
     setMessage("");
